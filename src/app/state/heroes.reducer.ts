@@ -1,8 +1,6 @@
-import {
-    loadHeroesSuccess,
-  } from './heroes.action';
-  import { createReducer, on } from '@ngrx/store';
-  import { initialState } from './heroes.state';
+import { loadHeroesSuccess } from './heroes.action';
+import { createReducer, on } from '@ngrx/store';
+import { initialState } from './heroes.state';
   
   const _heroesReducer = createReducer(
     initialState,
@@ -14,6 +12,6 @@ import {
     })
   );
   
-  export function postsReducer(state, action) {
+  export function heroesReducer(state, action) {
     return _heroesReducer(state, action);
   }

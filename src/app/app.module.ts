@@ -6,7 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeroesService } from './heroes.service';
-
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { HEROES_STATE_NAME } from './state/heroes.selector';
+import { heroesReducer } from './state/heroes.reducer'
 
 @NgModule({
   declarations: [
@@ -16,7 +20,9 @@ import { HeroesService } from './heroes.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot(heroesReducer),
+    EffectsModule.forRoot()
   ],
   providers: [HeroesService],
   bootstrap: [AppComponent]

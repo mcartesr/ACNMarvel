@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Heroe } from './classes/heroe';
+import { Heroe } from './interfaces/heroe';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class HeroesService {
@@ -26,17 +28,18 @@ export class HeroesService {
     this.page = 0;
   }
 
-  getHeroes (nameStartsWith?: string, page?: number) {
+/*
+  getHeroes (nameStartsWith?: string, page?: number): Observable<any[]> {
     console.log("TEAMS");
     console.log(Array.from(this.teams));
     if (page || page === 0) {
       this.page = page;
     }
+    this.heroes = [];
     const url = this.protocol + this.ApiUrl + 'characters?apikey=56d2cc44b1c84eb7c6c9673565a9eb4b'
     + '&offset=' + (this.page * this.step)
     + (nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : '');
     this.http.get<any>(url).subscribe((data) => {
-      this.heroes = [];
       this.total = Math.ceil(data.data.total / this.step);
       data.data.results.forEach( result => {
           this.heroes.push(new Heroe(
@@ -50,8 +53,33 @@ export class HeroesService {
           ));
         }
       );
+      return this.heroes;
     });
   }
+  */
+
+
+
+   getHeroes(nameStartsWith?: string, page?: number): Observable<any[]> {
+    const url = this.protocol + this.ApiUrl + 'characters?apikey=56d2cc44b1c84eb7c6c9673565a9eb4b'
+    + '&offset=' + (this.page * this.step)
+    + (nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : '');
+    return this.http
+      .get<any>(url)
+      .pipe(
+        map((data) => {
+          const heroes: Heroe[] = [];
+          for (let index = 0; index < data.data.results.length; index++) {
+            const element = data.data.results[index];
+            console.warn(element.id)
+            this.getTeamColor(element.id)
+            heroes.push(element);
+          }
+          return heroes;
+        })
+      );
+  }
+
 
   getHeroe(id) {
     const url = this.protocol + this.ApiUrl + 'characters/' + id + '?apikey=56d2cc44b1c84eb7c6c9673565a9eb4b';

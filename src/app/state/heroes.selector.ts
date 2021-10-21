@@ -3,6 +3,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export const HEROES_STATE_NAME = 'heroes';
 const getHeroesState = createFeatureSelector<HeroesState>(HEROES_STATE_NAME);
 
-export const getHeroes = createSelector(getHeroesState, (state) => {
+export const getHeroes = createSelector(getHeroesState, (state: HeroesState) => {
   return state.heroes;
 });
