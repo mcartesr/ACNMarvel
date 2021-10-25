@@ -11,3 +11,10 @@ export const loadHeroesSuccess = createAction(
     );
 
 
+// En el archivo action crearemos las acciones las cuales expresan eventos únicos que ocurren a lo largo de su aplicación
+// se le puede pasar un payload o informacion determinada para cada acción 
+
+// Para crear acciones debemos importar el metodo CreateAction desde la libreria @ngrx/store
+
+// Ejemplo creando una acción
+// export const LOAD_JOBS = '[Load Jobs] load Jobs';

@@ -1,13 +1,11 @@
+import { HeroProfile } from "./heroProfile";
+import { Team } from "./team";
+
 export interface Heroe {
     id: string,
     name: string,
-    description: string,
-    modified: Date,
+    heroProfile: HeroProfile,
     thumbnail: Object,
     resourceURI: string,
-    teamColor: string
+    teamColor: Team
 }
-
-export interface State {
-    app: Heroe;
- }

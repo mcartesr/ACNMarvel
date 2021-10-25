@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Heroe } from './interfaces/heroe';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Injectable()
 export class HeroesService {
@@ -61,6 +61,9 @@ export class HeroesService {
 
 
    getHeroes(nameStartsWith?: string, page?: number): Observable<any[]> {
+    if (page || page === 0) {
+      this.page = page;
+    }
     const url = this.protocol + this.ApiUrl + 'characters?apikey=56d2cc44b1c84eb7c6c9673565a9eb4b'
     + '&offset=' + (this.page * this.step)
     + (nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : '');
@@ -71,7 +74,6 @@ export class HeroesService {
           const heroes: Heroe[] = [];
           for (let index = 0; index < data.data.results.length; index++) {
             const element = data.data.results[index];
-            console.warn(element.id)
             this.getTeamColor(element.id)
             heroes.push(element);
           }

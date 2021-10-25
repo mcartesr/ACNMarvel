@@ -17,8 +17,7 @@ export class ListadoDeHeroesComponent implements OnInit {
 
   public title = 'Tutorial de Angular - Héroes de Marvel';
   public searchString;
-  heroes$ : Observable<Heroe[]> = this.store.select(getHeroes);
-  heroesList : Heroe[] = [];
+  heroes$ : Observable<Heroe[]>;
   
   // The child component : spinner
   @ViewChild('spi', { static: true }) spinner;
@@ -30,7 +29,6 @@ export class ListadoDeHeroesComponent implements OnInit {
   }
 
   submitSearch() {
-    this.heroesService.resetPager();
     this.heroesService.getHeroes(this.searchString);
   }
 
@@ -82,11 +80,9 @@ export class ListadoDeHeroesComponent implements OnInit {
 
      */
     //this.spinner.toggle_spinner();
-    for (let i = 0; i < 1; i++) {
-    this.heroes$.subscribe( heroes => {
 
-     
-      console.warn(heroes)
+    /*
+    this.heroes$.subscribe( heroes => {
 
       if(heroes === null){
         console.warn("primero es null")
@@ -96,10 +92,12 @@ export class ListadoDeHeroesComponent implements OnInit {
           this.heroesList.push(element);
         }
       }
-      this.store.dispatch(loadHeroes());
-     
-    })  
+    })
+    */
+    this.heroes$ = this.store.select(getHeroes);
+    console.warn(this.heroes$)
+    this.store.dispatch(loadHeroes());
 
-  }
+  
  }
 }
